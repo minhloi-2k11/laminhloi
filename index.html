@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        html, body { margin: 0; padding: 0; overflow: hidden; font-size: 1.3vw; height: 100%; background: #f0f4f8; }
+        html, body { margin: 0; padding: 0; overflow: hidden; font-size: 1.4vw; height: 100%; background: #f0f4f8; }
         .slides-container { position: relative; width: 100vw; height: 100vh; }
         .slide { 
             position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease-in-out; 
@@ -20,53 +20,45 @@
         }
         .slide.active { opacity: 1; pointer-events: auto; }
 
-        /* Bỏ scrollable-slide hoàn toàn, tất cả slide fit màn hình */
-        .content-wrapper {
-            height: 100%;
-            padding: 3rem 5% 5rem;
+        .scrollable-slide {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 5rem 5% 12rem;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
+
+        .scrollable-slide::-webkit-scrollbar { width: 10px; }
+        .scrollable-slide::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 12px; }
+        .scrollable-slide::-webkit-scrollbar-thumb { background: #888; border-radius: 12px; }
+        .scrollable-slide::-webkit-scrollbar-thumb:hover { background: #555; }
 
         .slide1-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
         .slide1-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 2rem; color: white; }
         .text-box { 
             background: rgba(0,0,0,0.65); backdrop-filter: blur(12px); border-radius: 20px; 
-            padding: 1.8rem 3rem; margin: 1.2rem auto; width: 85%; max-width: 1000px; 
+            padding: 2rem 3.5rem; margin: 1.5rem auto; width: 85%; max-width: 1000px; 
             text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.6); 
             opacity: 0; transform: translateY(60px); transition: all 0.9s ease-out; 
         }
         .text-box.visible { opacity: 1; transform: translateY(0); }
 
-        .slide2 { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://thumbs.dreamstime.com/b/halong-bay-boats-set-against-milky-way-galaxy-night-amazing-view-271844314.jpg') center/cover no-repeat; color: white; }
-        .slide2 .content-wrapper { justify-content: flex-start; }
-        .card { background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); border-radius: 16px; padding: 1.5rem; box-shadow: 0 8px 25px rgba(0,0,0,0.5); opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .slide2 { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://thumbs.dreamstime.com/b/halong-bay-boats-set-against-milky-way-galaxy-night-amazing-view-271844314.jpg') center/cover no-repeat; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; color: white; }
+        .card { background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; box-shadow: 0 8px 25px rgba(0,0,0,0.5); opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; margin-bottom: 2rem; }
         .card.visible { opacity: 1; transform: translateY(0); }
         .card-left { border-left: 8px solid #0A6EBD; }
         .card-right { border-right: 8px solid #0A6EBD; }
         .main-font { font-family: 'Montserrat', sans-serif; }
-        .map-img { width: 100%; max-height: 280px; object-fit: contain; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); margin-top: 1rem; border: 1px solid #444; }
+        .map-img { width: 100%; max-height: 320px; object-fit: contain; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); margin-top: 1rem; border: 1px solid #444; }
 
-        .activities-grid, .threat-grid, .solutions-grid { 
-            width: 100%; max-width: 1300px; margin: 0 auto; 
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; 
-        }
-        .main-text-card, .main-threat-text, .main-solution-text { 
-            grid-column: 1 / -1; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); 
-            border-radius: 20px; padding: 1.4rem 2.5rem; box-shadow: 0 10px 35px rgba(0,0,0,0.28); 
-            opacity: 0; transform: translateY(40px); transition: all 0.9s ease-out; color: #000; 
-            text-align: center; font-size: 1.5rem; line-height: 1.45; font-family: 'Open Sans', sans-serif; 
-            font-weight: 700; max-height: 28vh; overflow: hidden; 
-        }
+        .activities-grid, .threat-grid, .solutions-grid { width: 95%; max-width: 1200px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin: 0 auto; padding: 1rem 0 4rem; }
+        .main-text-card, .main-threat-text, .main-solution-text { grid-column: 1 / -1; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-radius: 20px; padding: 1.6rem 2.8rem; box-shadow: 0 10px 35px rgba(0,0,0,0.28); opacity: 0; transform: translateY(40px); transition: all 0.9s ease-out; color: #000; text-align: center; font-size: 1.8rem; line-height: 1.4; font-family: 'Open Sans', sans-serif; font-weight: 700; max-width: 80%; margin: 1.2rem auto; max-height: 35vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #888 #f0f0f0; }
         .main-text-card.visible, .main-threat-text.visible, .main-solution-text.visible { opacity: 1; transform: translateY(0); }
+        .main-text-card::-webkit-scrollbar, .main-threat-text::-webkit-scrollbar, .main-solution-text::-webkit-scrollbar { width: 8px; }
+        .main-text-card::-webkit-scrollbar-track, .main-threat-text::-webkit-scrollbar-track, .main-solution-text::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 10px; }
+        .main-text-card::-webkit-scrollbar-thumb, .main-threat-text::-webkit-scrollbar-thumb, .main-solution-text::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        .main-text-card::-webkit-scrollbar-thumb:hover, .main-threat-text::-webkit-scrollbar-thumb:hover, .main-solution-text::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        .activity-img-card, .threat-img-card, .solution-img-card { 
-            border-radius: 16px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.35); 
-            opacity: 0; transform: translateY(40px); transition: all 0.9s ease-out; 
-            aspect-ratio: 4 / 3; 
-        }
+        .activity-img-card, .threat-img-card, .solution-img-card { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.35); opacity: 0; transform: translateY(40px); transition: all 0.9s ease-out; aspect-ratio: 4 / 3; width: 100%; }
         .activity-img-card.visible, .threat-img-card.visible, .solution-img-card.visible { opacity: 1; transform: translateY(0); }
         .activity-img-card img, .threat-img-card img, .solution-img-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .activity-img-card:hover img, .threat-img-card:hover img, .solution-img-card:hover img { transform: scale(1.08); }
@@ -74,30 +66,88 @@
         .slide3 { background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)), url('https://res.cloudinary.com/rainforest-cruises/images/c_fill,g_auto,f_auto,q_auto,w_1120,h_650/v1622570809/14-Halong-Bay-Tourist-Attractions-Lan-Ha/14-Halong-Bay-Tourist-Attractions-Lan-Ha.jpg') center/cover no-repeat; }
         .slide4 { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.75)), url('https://www.aljazeera.com/wp-content/uploads/2023/06/33GM3LZ-highres-1685596952.jpg?resize=1920%2C1080') center/cover no-repeat; }
         .slide5 { background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('https://xa6zemg4r8.cloudimg.io/_images_/8-4halong3-mOKB8vhJARQSVmBGWFaP.jpg') center/cover no-repeat; }
-        .slide6 { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: center; }
+        .slide6 { 
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            width: 100vw; 
+            margin: 0; 
+            padding: 0; 
+        }
 
         .thank-you-content { 
-            max-width: 90%; padding: 2rem; text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100%; 
+            width: 100%; 
+            text-align: center; 
+            padding: 2rem; 
+            box-sizing: border-box; 
+            max-width: 1000px; 
+            margin: 0 auto; 
         }
-        .thank-you-title { font-size: 5.5rem; font-weight: bold; margin-bottom: 1.8rem; text-shadow: 0 6px 20px rgba(0,0,0,0.8); animation: pulse 2.5s infinite; }
-        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+        .thank-you-title { 
+            font-size: 7vw; 
+            font-weight: bold; 
+            margin: 0 0 2rem 0; 
+            color: white; 
+            text-shadow: 0 6px 20px rgba(0,0,0,0.8); 
+            animation: pulse 2.5s infinite; 
+            line-height: 1.1; 
+        }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        .gif-container { 
+            margin: 1.5rem auto; 
+            max-width: 120px; 
+            width: 80%; 
+            opacity: 0; 
+            transform: translateY(40px); 
+            transition: all 1.2s ease-out; 
+        }
+        .gif-container.visible { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .gif-container img { 
+            width: auto; 
+            height: auto; 
+            border-radius: 10px; 
+            box-shadow: 0 10px 35px rgba(0,0,0,0.6); 
+            display: block; 
+        }
 
         .video-btn { 
-            display: inline-flex; align-items: center; gap: 1.2rem; background: #ff0000; color: white; 
-            font-size: 1.8rem; font-weight: bold; padding: 1.2rem 3.5rem; border-radius: 9999px; 
-            text-decoration: none; box-shadow: 0 12px 35px rgba(255,0,0,0.5); transition: all 0.4s; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 1.5rem; 
+            background: #ff0000; 
+            color: white; 
+            font-size: 2.2rem; 
+            font-weight: bold; 
+            padding: 1.2rem 3.5rem; 
+            border-radius: 9999px; 
+            text-decoration: none; 
+            box-shadow: 0 12px 35px rgba(255,0,0,0.5); 
+            transition: all 0.4s; 
+            margin-top: 2rem; 
+            min-width: 320px; 
         }
-        .video-btn:hover { background: #cc0000; transform: translateY(-6px); box-shadow: 0 18px 45px rgba(255,0,0,0.6); }
-
-        .gif-container { margin: 2rem auto; max-width: 360px; opacity: 0; transform: translateY(40px); transition: all 1.2s ease-out; }
-        .gif-container.visible { opacity: 1; transform: translateY(0); }
+        .video-btn:hover { 
+            background: #cc0000; 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 50px rgba(255,0,0,0.6); 
+        }
     </style>
 </head>
 <body>
 
 <div class="slides-container">
 
-  <!-- Slide 1 giữ nguyên -->
   <div class="slide slide1 active">
     <img src="https://halongbayluxcruises.com/wp-content/uploads/2025/02/tips-for-taking-the-best-photos-in-halong-bay-4.png" alt="Ha Long Bay panoramic" class="slide1-bg">
     <div class="slide1-overlay">
@@ -110,86 +160,79 @@
     </div>
   </div>
 
-  <!-- Slide 2 giữ nguyên cấu trúc, nhưng fit hơn -->
   <div class="slide slide2">
-    <div class="content-wrapper">
-      <header class="w-full text-center py-4">
-        <h1 class="text-4xl font-bold main-font text-white drop-shadow-lg">Where is Ha Long Bay located?</h1>
-      </header>
-      <main class="flex-grow flex items-center justify-center gap-6">
-        <div class="w-5/12 card card-left">
-          <h2 class="text-2xl font-bold main-font text-[#0A6EBD] mb-3">Administrative Division</h2>
-          <ul class="list-disc list-inside space-y-1.5 text-base text-gray-200">
-            <li>Quang Ninh Province</li>
-            <li>Ha Long City</li>
-            <li>Parts of Hai Phong City</li>
-          </ul>
-          <h2 class="text-2xl font-bold main-font text-[#0A6EBD] mt-6 mb-3">Regional Context</h2>
-          <ul class="list-disc list-inside space-y-1.5 text-base text-gray-200">
-            <li>Northeastern Vietnam</li>
-            <li>Northwest Gulf of Tonkin</li>
-          </ul>
-        </div>
-        <div class="w-5/12 card card-right">
-          <h2 class="text-2xl font-bold main-font text-[#0A6EBD] mb-3">Geographical Location</h2>
-          <img src="https://www.asiaodysseytravel.com/images/asia-tours/maps/halong-bay-area-map.jpg" alt="Bản đồ khoanh vùng Vịnh Hạ Long" class="map-img">
-          <div class="mt-4 inline-flex items-center bg-[#FFC300] text-gray-800 font-semibold py-1.5 px-4 rounded-full text-base">
-            <span class="w-3 h-3 bg-gray-800 rounded-full mr-3"></span> 170 km Southeast of Hanoi
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- Slide 3,4,5: bỏ scrollable, wrap trong content-wrapper -->
-  <div class="slide slide3">
-    <div class="content-wrapper">
-      <div class="activities-grid">
-        <div class="main-text-card">
-          In Ha Long Bay, there are many exciting activities: you can buy a ticket for a boat tour to explore the bay, go kayaking, visit stunning caves, or hike to the top of limestone mountains.
-        </div>
-        <div class="activity-img-card"><img src="https://lp-cms-production.imgix.net/2023-10/GettyRF92865967.jpg?auto=format&fit=crop&q=80&w=1920" alt="Ha Long Bay boat cruise"></div>
-        <div class="activity-img-card"><img src="https://treasure-junk.com/wp-content/uploads/2024/09/pegasus-cruise-lan-ha-bay-6.jpg" alt="Kayaking in Ha Long Bay"></div>
-        <div class="activity-img-card"><img src="https://lejourneyhalongcruise.com/wp-content/uploads/2022/07/co-gi-ben-trong-hang-sung-sot-khien-ai-cung-phai-kinh-ngac-08-1641706550.jpeg" alt="Sung Sot Cave Ha Long Bay"></div>
+    <header class="w-full text-center py-6">
+      <h1 class="text-4xl font-bold main-font text-white drop-shadow-lg">Where is Ha Long Bay located?</h1>
+    </header>
+    <main class="flex-grow flex items-center justify-center gap-8 mt-4">
+      <div class="w-5/12 card card-left">
+        <h2 class="text-2xl font-bold main-font text-[#0A6EBD] mb-4">Administrative Division</h2>
+        <ul class="list-disc list-inside space-y-2 text-lg text-gray-200">
+          <li>Quang Ninh Province</li>
+          <li>Ha Long City</li>
+          <li>Parts of Hai Phong City</li>
+        </ul>
+        <h2 class="text-2xl font-bold main-font text-[#0A6EBD] mt-8 mb-4">Regional Context</h2>
+        <ul class="list-disc list-inside space-y-2 text-lg text-gray-200">
+          <li>Northeastern Vietnam</li>
+          <li>Northwest Gulf of Tonkin</li>
+        </ul>
       </div>
-    </div>
-  </div>
-
-  <div class="slide slide4">
-    <div class="content-wrapper">
-      <div class="threat-grid">
-        <div class="main-threat-text">
-          Although Ha Long Bay is beautiful and offers many exciting activities, it faces serious threats including plastic pollution, water contamination from boats and tourism, air pollution, and loss of biodiversity due to trash accumulation and habitat destruction.
+      <div class="w-5/12 card card-right">
+        <h2 class="text-2xl font-bold main-font text-[#0A6EBD] mb-4">Geographical Location</h2>
+        <img src="https://www.asiaodysseytravel.com/images/asia-tours/maps/halong-bay-area-map.jpg" alt="Bản đồ khoanh vùng Vịnh Hạ Long" class="map-img">
+        <div class="mt-6 inline-flex items-center bg-[#FFC300] text-gray-800 font-semibold py-2 px-4 rounded-full text-lg">
+          <span class="w-3 h-3 bg-gray-800 rounded-full mr-3"></span> 170 km Southeast of Hanoi
         </div>
-        <div class="threat-img-card"><img src="https://i.ibb.co/8gdygwSX/images-6.jpg" alt="Ô nhiễm rác"></div>
-        <div class="threat-img-card"><img src="https://i.ibb.co/xt4cR2BV/images-7.jpg" alt="Rác styrofoam"></div>
-        <div class="threat-img-card"><img src="https://i.ibb.co/9mvD1r2P/1-4502-1685850547.jpg" alt="Ô nhiễm từ tàu thuyền"></div>
-        <div class="threat-img-card"><img src="https://i.ibb.co/0R3TkTcT/images-8.jpg" alt="Rác ảnh hưởng san hô"></div>
       </div>
+    </main>
+  </div>
+
+  <div class="slide slide3 scrollable-slide">
+    <div class="activities-grid">
+      <div class="main-text-card">
+        In Ha Long Bay, there are many exciting activities: you can buy a ticket for a boat tour to explore the bay, go kayaking, visit stunning caves, or hike to the top of limestone mountains.
+      </div>
+      <div class="activity-img-card"><img src="https://lp-cms-production.imgix.net/2023-10/GettyRF92865967.jpg?auto=format&fit=crop&q=80&w=1920" alt="Ha Long Bay boat cruise"></div>
+      <div class="activity-img-card"><img src="https://treasure-junk.com/wp-content/uploads/2024/09/pegasus-cruise-lan-ha-bay-6.jpg" alt="Kayaking in Ha Long Bay"></div>
+      <div class="activity-img-card"><img src="https://lejourneyhalongcruise.com/wp-content/uploads/2022/07/co-gi-ben-trong-hang-sung-sot-khien-ai-cung-phai-kinh-ngac-08-1641706550.jpeg" alt="Sung Sot Cave Ha Long Bay"></div>
     </div>
   </div>
 
-  <div class="slide slide5">
-    <div class="content-wrapper">
-      <div class="solutions-grid">
-        <div class="main-solution-text">
-          In my opinion i think we should make the schedules to protect the environment and biodiversity by the activities such as raising public awareness about environmental protection and reduce waste disposal into water sources.
-        </div>
-        <div class="solution-img-card"><img src="https://www.indochina-junk.com/wp-content/uploads/2023/05/halong-bay-cruise-responsible-travel-indochina-junk_6_2017_04-960x540-1.jpg" alt="Green Ha Long Bay cleanup activity"></div>
-        <div class="solution-img-card"><img src="https://bhayacruises.com/blog/wp-content/uploads/2024/05/z5417794082268_4f5002eb3cf96c37c711b8d46be9333a.jpg" alt="Group clean the bay event Ha Long"></div>
-        <div class="solution-img-card"><img src="https://image.vietnamnews.vn/uploadvnnews/Article/2024/5/8/348156_4844104182370072_Collect.jpg" alt="Volunteers cleaning Ha Long Bay beach"></div>
+  <div class="slide slide4 scrollable-slide">
+    <div class="threat-grid">
+      <div class="main-threat-text">
+        Although Ha Long Bay is beautiful and offers many exciting activities, it faces serious threats including plastic pollution, water contamination from boats and tourism, air pollution, and loss of biodiversity due to trash accumulation and habitat destruction.
       </div>
+      <div class="threat-img-card"><img src="https://i.ibb.co/8gdygwSX/images-6.jpg" alt="Ô nhiễm rác"></div>
+      <div class="threat-img-card"><img src="https://i.ibb.co/xt4cR2BV/images-7.jpg" alt="Rác styrofoam"></div>
+      <div class="threat-img-card"><img src="https://i.ibb.co/9mvD1r2P/1-4502-1685850547.jpg" alt="Ô nhiễm từ tàu thuyền"></div>
+      <div class="threat-img-card"><img src="https://i.ibb.co/0R3TkTcT/images-8.jpg" alt="Rác ảnh hưởng san hô"></div>
     </div>
   </div>
 
-  <!-- Slide 6: fix fit & center -->
+  <div class="slide slide5 scrollable-slide">
+    <div class="solutions-grid">
+      <div class="main-solution-text">
+        In my opinion i think we should make the schedules to protect the environment and biodiversity by the activities such as raising public awareness about environmental protection and reduce waste disposal into water sources.
+      </div>
+      <div class="solution-img-card"><img src="https://www.indochina-junk.com/wp-content/uploads/2023/05/halong-bay-cruise-responsible-travel-indochina-junk_6_2017_04-960x540-1.jpg" alt="Green Ha Long Bay cleanup activity"></div>
+      <div class="solution-img-card"><img src="https://bhayacruises.com/blog/wp-content/uploads/2024/05/z5417794082268_4f5002eb3cf96c37c711b8d46be9333a.jpg" alt="Group clean the bay event Ha Long"></div>
+      <div class="solution-img-card"><img src="https://image.vietnamnews.vn/uploadvnnews/Article/2024/5/8/348156_4844104182370072_Collect.jpg" alt="Volunteers cleaning Ha Long Bay beach"></div>
+    </div>
+  </div>
+
   <div class="slide slide6">
     <div class="thank-you-content">
       <h1 class="thank-you-title">Thank You For Watching!</h1>
+      
       <div class="gif-container">
-        <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyb3lybjV4dDloa3J2NGdxc3BiN2xwZmE3bGw3ZjVmaTgyazBpODlvbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oeS2n25LaP4kXpjatz/giphy.gif" style="width:100%;border-radius:20px;box-shadow:0 10px 35px rgba(0,0,0,0.6);">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyb3lybjV4dDloa3J2NGdxc3BiN2xwZmE3bGw3ZjVmaTgyazBpODlvbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/oeS2n25LaP4kXpjatz/giphy.gif" loading="lazy">
       </div>
-      <a href="https://youtu.be/sDU6IJyn7_w?si=9tDsjTaqIY28gDEo" target="_blank" class="video-btn">
+      
+      <a href="https://youtu.be/sDU6IJyn7_w?si=9tDsjTaqIY28gDEo" 
+         target="_blank" 
+         class="video-btn">
         <span class="material-symbols-outlined text-5xl">play_circle</span>
         Thư giãn bằng 1 video nhé 🐱🐭
       </a>
@@ -199,7 +242,6 @@
 </div>
 
 <script>
-// Script giữ nguyên, chỉ thêm reset cho slide 5 nếu cần
 const slides = document.querySelectorAll('.slide');
 const textBoxes = document.querySelectorAll('.text-box');
 const cardsSlide2 = document.querySelectorAll('.slide2 .card');
@@ -267,7 +309,6 @@ function showNext() {
     currentSlide++;
     slides[currentSlide].classList.add('active');
 
-    // Reset animations khi chuyển slide
     if (currentSlide === 1) {
       currentCardSlide2 = -1;
       cardsSlide2.forEach(c => c.classList.remove('visible'));
@@ -288,7 +329,7 @@ function showNext() {
       solutionImgs.forEach(c => c.classList.remove('visible'));
     }
     if (currentSlide === 5) {
-      setTimeout(() => thankYouGif?.classList.add('visible'), 800);
+      setTimeout(() => thankYouGif?.classList.add('visible'), 1000);
     }
   }
 }
@@ -301,7 +342,14 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Bỏ wheel event vì không còn scroll nữa
+document.querySelectorAll('.scrollable-slide').forEach(slide => {
+  slide.addEventListener('wheel', e => {
+    const atBottom = slide.scrollTop + slide.clientHeight >= slide.scrollHeight - 20;
+    if (e.deltaY > 0 && atBottom) {
+      showNext();
+    }
+  }, { passive: true });
+});
 </script>
 
 </body>
